@@ -238,3 +238,15 @@ test_dataset.py
 test_model.py
 test_train.py
 train_can_backup.py
+
+# Test files
+debug_loader/
+
+# Final pipeline generated outputs
+final_evaluation_test/
+
+# Local test configuration and scripts
+config_test.yaml
+test_final_evaluator.py
+test_final_loader.py
+test_final_validation.py

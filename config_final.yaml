@@ -1,0 +1,48 @@
+project:
+  experiment: can_nano_5000_v1
+  seed: 42
+model:
+  classes: 1
+  input_size: [416, 416]
+  pretrained: weights/yolox_nano.pth
+  # Official YOLOX checkpoints use 'model' state dict; class head is filtered on fine-tuning.
+data:
+  root: datasets/CanCOCO_final
+  raw_images: datasets/can_raw/images
+  raw_labels: datasets/can_raw/labels
+  manifest: datasets/split_manifest.csv
+  train_count: 4000
+  val_count: 1000
+training:
+  epochs: 50            # TEAM MUST CONFIRM
+  batch_size: 8         # GPU VRAM dependent; across all GPUs
+  gpus: 1
+  fp16: false           # enable only after confirming GPU support
+  num_workers: 4
+  max_labels: 300       # check actual maximum after mosaic (4 frames)
+  base_learning_rate: 0.001 # effective initial LR for configured total batch size
+  momentum: 0.9
+  weight_decay: 0.0005
+  scheduler: yoloxwarmcos
+  warmup_epochs: 3
+  no_aug_epochs: 5
+  min_lr_ratio: 0.05
+  ema: true
+  # 증강 설정
+  mosaic_probability: 0.0 # mosaic augmentation probability; 0.0 disables mosaic
+  mixup_enabled: false
+  flip_probability: 0.5
+  hsv_probability: 1.0
+
+  eval_interval: 1
+  print_interval: 10
+  save_history: false
+inference:
+  confidence: 0.50
+  nms_iou: 0.45
+evaluation:
+  matching_iou: 0.50
+  map_min_confidence: 0.001
+  max_detections: 100
+output:
+  root: YOLOX_outputs
