@@ -226,3 +226,15 @@ events.out.tfevents*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Can detection datasets and outputs
+evaluation_results/
+prediction_results/
+training_outputs/
+weights/
+
+# Local testing and backup files
+test_dataset.py
+test_model.py
+test_train.py
+train_can_backup.py

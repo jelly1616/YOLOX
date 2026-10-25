@@ -1,0 +1,43 @@
+# YOLOX-Nano 캔 객체 탐지 공통 설정
+# 이 파일의 경로는 YOLOX 저장소 최상위 폴더를 기준으로 합니다.
+model:
+  name: yolox_nano
+  num_classes: 1
+  input_size: [416, 416]
+  pretrained_weights: weights/yolox_nano.pth
+
+data:
+  directory: datasets/CanCOCO
+  train_annotations: instances_train2017.json
+  val_annotations: instances_val2017.json
+  test_annotations: instances_test2017.json
+  train_images: train2017
+  val_images: val2017
+  test_images: test2017
+  max_labels: 200
+
+training:
+  device: cpu                # gpu 컴퓨터에서 cuda로 변경
+  epochs: 1
+  batch_size: 2
+  max_steps: 1              # 0 = epoch 전체 학습
+  learning_rate: 0.001
+  optimizer: SGD
+  momentum: 0.9
+  weight_decay: 0.0
+  num_threads: 2
+  num_workers: 0
+  flip_prob: 0.0
+  hsv_prob: 0.0
+  output_checkpoint: training_outputs/can_nano_finetuned.pth
+
+inference:
+  checkpoint: training_outputs/can_nano_finetuned.pth
+  confidence: 0.50
+  nms_iou: 0.45
+  max_images: 5
+  output_directory: prediction_results
+
+evaluation:
+  matching_iou: 0.50
+  output_directory: evaluation_results
